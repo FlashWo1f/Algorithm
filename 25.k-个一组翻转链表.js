@@ -30,7 +30,7 @@ var reverseKGroup = function(head, k) {
 function __reverseN(head, k) {
   let cur = head
   let count = k
-  while (k-- && cur) {
+  while (--k && cur) {
     cur = cur.next
   }
   return cur ? reverseN(head, count) : head
