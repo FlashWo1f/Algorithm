@@ -60,11 +60,14 @@ class Heap {
 
   pop = () => {
     if (!this.count) return
+    // 记录弹出之前的第一个值
+    const val = this.data[0]
     // 首部弹出，并且尾部元素填充到首部
     // this.data[0] = this.data[this.count - 1]
     swap(this.data, 0, this.count - 1)
     this.count -= 1
     this.shiftDown(0)
+    return val
   }
 }
 
