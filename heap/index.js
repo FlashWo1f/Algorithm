@@ -21,6 +21,10 @@ class Heap {
     console.log(str)
   }
 
+  logArr = () => {
+    console.log('all data: ', this.data)
+  }
+
   // 向上调整
   shiftUp = (idx) => {
     while (idx && this.data[Math.floor((idx - 1) / 2)] < this.data[idx]) {
@@ -57,7 +61,8 @@ class Heap {
   pop = () => {
     if (!this.count) return
     // 首部弹出，并且尾部元素填充到首部
-    this.data[0] = this.data[this.count - 1]
+    // this.data[0] = this.data[this.count - 1]
+    swap(this.data, 0, this.count - 1)
     this.count -= 1
     this.shiftDown(0)
   }
@@ -85,3 +90,11 @@ heap.pop()
 heap.pop()
 console.log('heap pop 3: ');
 heap.log()
+heap.pop()
+heap.pop()
+heap.pop()
+heap.pop()
+heap.pop()
+heap.pop()
+// 弹出所有首部元素，也就意味着完成了一次 `堆排序`
+heap.logArr()
