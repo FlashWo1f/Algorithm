@@ -7,10 +7,12 @@ function swap(data, i, j) {
 
 class Heap {
 
-  constructor() {
+  constructor(compare) {
     this.count = 0
     // 一个一维数组来存储堆
     this.data = []
+    // 控制大小顶堆
+    this.compare = typeof compare === 'function' ? compare : ((a, b) => a > b)
   }
 
   log = () => {
@@ -27,7 +29,7 @@ class Heap {
 
   // 向上调整
   shiftUp = (idx) => {
-    while (idx && this.data[Math.floor((idx - 1) / 2)] < this.data[idx]) {
+    while (idx && this.compare(this.data[idx], this.data[Math.floor((idx - 1) / 2)])) {
       swap(this.data, Math.floor((idx - 1) / 2), idx)
       idx = Math.floor((idx - 1) / 2)
     }
@@ -37,13 +39,13 @@ class Heap {
   shiftDown = (idx) => {
     let index = idx
     // 向下调整 判断条件  index 这个节点有子节点
-    while ((index * 2 + 1) <= (this.count - 1)) {
+    while ((index * 2 + 1) < this.count) {
       // temp 指向三元组最大值的下标
       let temp = index
       // 比左子树小 那么 temp 下标改变
-      if (this.data[temp] < this.data[index * 2 + 1]) temp = index * 2 + 1
+      if (this.compare(this.data[index * 2 + 1], this.data[temp])) temp = index * 2 + 1
       // 右子树存在且大于 temp 的下标对应的值
-      if (((index * 2 + 2) <= (this.count - 1)) && this.data[temp] < this.data[index * 2 + 2]) temp = index * 2 + 2
+      if (((index * 2 + 2) < this.count) && this.compare(this.data[index * 2 + 2], this.data[temp])) temp = index * 2 + 2
       // 如果 temp 并没有改变 说明 index 对应的值已经是最大的了，无需再去向下调整了
       if (temp === index) break
       // 如果不是 交换值 进行下一个调整
@@ -74,7 +76,7 @@ class Heap {
 
 // test
 
-const heap = new Heap()
+const heap = new Heap((a, b) => a < b)
 heap.push(12)
 heap.push(11)
 heap.push(10)
@@ -101,3 +103,21 @@ heap.pop()
 heap.pop()
 // 弹出所有首部元素，也就意味着完成了一次 `堆排序`
 heap.logArr()
+
+var findKthLargest = function (nums, k) {
+  const maxHeapLength = nums.length - k + 1
+  const heap = new Heap()
+  for (let val of nums) {
+    if (heap.count < maxHeapLength) {
+      heap.push(val)
+    } else {
+      if (val > heap.data[0]) {
+        continue
+      } else {
+        heap.push(val)
+        heap.pop()
+      }
+    }
+  }
+  return heap.data[0]
+};
