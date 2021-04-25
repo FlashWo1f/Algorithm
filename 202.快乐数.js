@@ -26,5 +26,13 @@ var isHappy = function(n) {
   }
   return cur === 1
 };
+
+let result = []
+for (let i = 0; i <= 100000; i++) {
+  if (isHappy(i)) {
+    result.push(i)
+  }
+}
+console.log('isHappy?', result.reduce((acc, cur) => acc + cur))
 // @lc code=end
 
