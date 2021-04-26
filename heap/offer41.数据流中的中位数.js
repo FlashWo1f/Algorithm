@@ -75,7 +75,7 @@ MedianFinder.prototype.addNum = function (num) {
   } else {
     if (num > this.heap1.data[0]) {
       this.heap2.push(num)
-      if (this.heap2.count - this.heap1.count === 2) {
+      if (this.heap2.count > this.heap1.count) {
         this.heap1.push(this.heap2.pop())
       }
     } else {
@@ -100,8 +100,7 @@ MedianFinder.prototype.findMedian = function () {
   } else if (length % 2 === 0) {
     ret = (this.heap1.data[0] + this.heap2.data[0]) / 2
   } else {
-    const v = (this.heap1.count > this.heap2.count) ? this.heap1 : this.heap2
-    ret = v.data[0]
+    ret = this.heap1.data[0]
   }
   return ret
 };
