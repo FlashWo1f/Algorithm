@@ -1,4 +1,15 @@
+/*
+ * @lc app=leetcode.cn id=692 lang=javascript
+ *
+ * [692] 前K个高频单词
+ */
 
+// @lc code=start
+/**
+ * @param {string[]} words
+ * @param {number} k
+ * @return {string[]}
+ */
 function swap(data, i, j) {
   const temp = data[i]
   data[i] = data[j]
@@ -13,18 +24,6 @@ class Heap {
     this.data = []
     // 控制大小顶堆
     this.compare = typeof compare === 'function' ? compare : ((a, b) => a > b)
-  }
-
-  log = () => {
-    let str = ''
-    for (let i = 0; i < this.count; i++) {
-      str += `${this.data[i]} -> `
-    }
-    console.log(str)
-  }
-
-  logArr = () => {
-    console.log('all data: ', this.data)
   }
 
   // 向上调整
@@ -72,52 +71,45 @@ class Heap {
     return val
   }
 }
-
-
-// test
-
-const heap = new Heap((a, b) => a < b)
-heap.push(12)
-heap.push(11)
-heap.push(10)
-heap.push(6)
-heap.push(7)
-heap.push(9)
-heap.push(3)
-heap.push(4)
-heap.push(5)
-console.log('heap: ');
-heap.log()
-heap.pop()
-console.log('heap pop 1: ');
-heap.log()
-heap.pop()
-heap.pop()
-console.log('heap pop 3: ');
-heap.log()
-heap.pop()
-heap.pop()
-heap.pop()
-heap.pop()
-heap.pop()
-heap.pop()
-// 弹出所有首部元素，也就意味着完成了一次 `堆排序`
-heap.logArr()
-
-var findKthLargest = function (nums, k) {
-  const maxHeapLength = nums.length - k + 1
-  const heap = new Heap()
-  for (let val of nums) {
-    if (heap.count < maxHeapLength) {
-      heap.push(val)
+var topKFrequent = function (words, k) {
+  const map = words.reduce((pre, cur) => {
+    if (pre[cur]) {
+      pre[cur] += 1
     } else {
-      if (val > heap.data[0]) {
-        continue
-      } else {
-        heap.push(val)
-        heap.pop()
-      }
+      pre[cur] = 1
+    }
+    return pre
+  }, {})
+
+  const heap = new Heap((a, b) => a[1] < b[1])
+
+  for (const key in map) {
+    let temp = [key, map[key]]
+    // 根据题意优化 根据蛋疼的这个例子优化的
+    // topKFrequent(["i", "love", "leetcode", "i", "love", "coding", "i", "love", "leetcode", "i", "love", "coding", "hh"], 3)
+    if (heap.count < k || heap.data[0][1] <= temp[1]) {
+      heap.push(temp)
     }
   }
-  return heap.data[0]
+
+  return heap
+    .data
+    .sort((a, b) => {
+      if (b[1] === a[1]) {
+        const nameA = a[0].toUpperCase()
+        const nameB = b[0].toUpperCase()
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0
+      }
+      return b[1] - a[1]
+    })
+    .slice(0, k)
+    .map(v => v[0])
 };
+// @lc code=end
+

@@ -1,4 +1,16 @@
+/*
+ * @lc app=leetcode.cn id=373 lang=javascript
+ *
+ * [373] 查找和最小的K对数字
+ */
 
+// @lc code=start
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @param {number} k
+ * @return {number[][]}
+ */
 function swap(data, i, j) {
   const temp = data[i]
   data[i] = data[j]
@@ -13,18 +25,6 @@ class Heap {
     this.data = []
     // 控制大小顶堆
     this.compare = typeof compare === 'function' ? compare : ((a, b) => a > b)
-  }
-
-  log = () => {
-    let str = ''
-    for (let i = 0; i < this.count; i++) {
-      str += `${this.data[i]} -> `
-    }
-    console.log(str)
-  }
-
-  logArr = () => {
-    console.log('all data: ', this.data)
   }
 
   // 向上调整
@@ -72,52 +72,25 @@ class Heap {
     return val
   }
 }
-
-
-// test
-
-const heap = new Heap((a, b) => a < b)
-heap.push(12)
-heap.push(11)
-heap.push(10)
-heap.push(6)
-heap.push(7)
-heap.push(9)
-heap.push(3)
-heap.push(4)
-heap.push(5)
-console.log('heap: ');
-heap.log()
-heap.pop()
-console.log('heap pop 1: ');
-heap.log()
-heap.pop()
-heap.pop()
-console.log('heap pop 3: ');
-heap.log()
-heap.pop()
-heap.pop()
-heap.pop()
-heap.pop()
-heap.pop()
-heap.pop()
-// 弹出所有首部元素，也就意味着完成了一次 `堆排序`
-heap.logArr()
-
-var findKthLargest = function (nums, k) {
-  const maxHeapLength = nums.length - k + 1
-  const heap = new Heap()
-  for (let val of nums) {
-    if (heap.count < maxHeapLength) {
-      heap.push(val)
-    } else {
-      if (val > heap.data[0]) {
-        continue
+var kSmallestPairs = function (nums1, nums2, k) {
+  const heap = new Heap((a, b) => {
+    return a[0] + a[1] > b[0] + b[1]
+  })
+  let temp
+  for (let n1 of nums1) {
+    for (let n2 of nums2) {
+      temp = [n1, n2]
+      if (heap.count < k || heap.compare(heap.data[0], temp)) {
+        heap.push(temp)
+        if (heap.count > k) {
+          heap.pop()
+        }
       } else {
-        heap.push(val)
-        heap.pop()
+        break
       }
     }
   }
-  return heap.data[0]
+  return heap.data.slice(0, k)
 };
+// @lc code=end
+
