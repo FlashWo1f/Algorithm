@@ -27,6 +27,7 @@ class Heap {
     if (!this.count) return
     const val = this.data[0]
     this.swap(0, this.count - 1)
+    this.count -= 1
     this.downAdjust(0)
     return val
   }
