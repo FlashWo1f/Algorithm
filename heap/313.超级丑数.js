@@ -89,6 +89,41 @@ var nthSuperUglyNumber = function (n, primes) {
   // console.log(heap.data)
   return ans
 };
-console.log(nthSuperUglyNumber(12, [2,7, 13, 19]))
+// console.log(nthSuperUglyNumber(12, [2,7, 13, 19]))
+
+// 大顶堆实现 超级丑数
+// 事实证明 大顶堆是不能实现的 因为第3层的数部分比第四层部分大, 而我们必须每次取最小的弹出
+const nthSuperUglyNumberUseGreaterHeap = (n, primes) => {
+  const pLens = primes.length
+  const gheap = new Heap()
+  let currentRound = [1]
+  gheap.push(1)
+  let maxYinziIdx
+  while (gheap.count <= n) {
+    let nextRount = []
+    for (const num of currentRound) {
+      for (let i = 0; i < pLens; i++) {
+        if (num === 1) {
+          maxYinziIdx = 0
+        }
+        if (num % primes[i] === 0) {
+          maxYinziIdx = i
+        }
+      }
+      for (let j = maxYinziIdx; j < pLens; j++) {
+        gheap.push(num * primes[j])
+        nextRount.push(num * primes[j])
+        if (gheap.count === n) {
+          console.log(gheap.data)
+          return gheap.top()
+        } 
+        // console.log(gheap.data)
+      }
+    }
+    console.log('nextRount', nextRount)
+    currentRound = nextRount
+  }
+}
+console.log(nthSuperUglyNumberUseGreaterHeap(99, [2,7, 13, 19]))
 // @lc code=end
 
