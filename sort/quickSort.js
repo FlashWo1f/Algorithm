@@ -26,13 +26,27 @@ function quickSort(arr, left = 0, right = arr.length - 1) {
   }
 }
 
+function getExample(n) {
+  let arr = []
+  for(let i = 0; i < n; ++i) {
+    arr.push(Math.random().toFixed(3) * 1000)
+  }
+  return arr
+}
+
 const testArr = []
 let i = 0
 while (i < 10) {
   testArr.push(Math.floor(Math.random() * 1000))
   i++
 }
-console.log(nthNum(testArr, 0, testArr.length - 1, 2), testArr)
+const now = Date.now()
+let arr = getExample(100000)
+quickSort(arr)
+// 快排真的好快呀
+console.log('result', arr)
+console.log('run out time', Date.now() - now)
+// console.log(nthNum(testArr, 0, testArr.length - 1, 2), testArr)
 // console.log('unsort', testArr)
 // quickSort(testArr, 0, testArr.length - 1);
 // console.log('sort', testArr)
