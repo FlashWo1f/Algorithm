@@ -1,24 +1,26 @@
 function reverseN(head, n) {
-  // n === 1 的条件要注意 别写 !n
-  if (n === 1) return head
-  console.log('??', head)
-  let tail = head.next
-  const p = reverseN(head.next, n - 1)
+  // n === 1 的条件要注意
+  if (!head.next || n === 1) return head
+  const tail = head.next
+  const p = reverseN(head.next, --n)
   head.next = tail.next
   tail.next = head
   return p
 }
 
 function reverseBetween(head, m, n) {
-  const dummry = new ListNode(null, head)
-  let p = dummry
+  if (!head || !head.next) return head 
   const count = n - m + 1
+  // 应该用虚拟头节点的
+  let p = head
+  m -= 1
   while(--m) {
-    p = p.next
+    p = head.next
   }
   p.next = reverseN(p.next, count)
-  return dummry.next
+  return head
 }
+
 function ListNode(val, next) {
   this.val = (val === undefined ? 0 : val)
   this.next = (next === undefined ? null : next)
