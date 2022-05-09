@@ -27,6 +27,28 @@ function reverseBetween(head, m, n) {
   return dummy.next
 }
 
+function _reverseN(head, n) {
+  let count = 0
+  let p = head
+  while(p) {
+    p = p.next
+    if (++count >= n) break
+  }
+  return count < n ? head : reverseN(head, n)
+}
+
+function reverseKGroup(head, k) {
+  const dummy = new ListNode(null, head)
+  let p = dummy
+  let cur = p.next
+  while((p.next = _reverseN(cur, k)) !== cur) {
+    p = cur
+    cur = p.next
+    console.log('cur:', cur)
+  }
+  return dummy.next
+}
+
 let p1 = new ListNode(3)
 let p2 = new ListNode(2)
 let p3 = new ListNode(0)
@@ -39,7 +61,7 @@ p3.next = p4
 p4.next = p5
 p5.next = p6
 
-let head = reverseBetween(p1, 2, 6)
+let head = reverseKGroup(p1, 2)
 while (head) {
   console.log(head.val)
   head = head.next
