@@ -33,9 +33,9 @@ function merge(arr, left, right, mid) {
     end = right
   } 
   // 将剩下的数组项放入 temp
-  if (start <= end) {
+  // if (start <= end) {
     temp = temp.concat(arr.slice(start, end + 1))
-  }
+  // }
   // 将 temp 赋值给 arr
   for(let i = 0; i <= right - left; i++) {
     arr[left + i] = temp[i]
@@ -57,7 +57,7 @@ while (i < 10) {
   i++
 }
 const now = Date.now()
-let arr = getExample(100)
+let arr = getExample(100000)
 // let arr = [3, 7, 4, 8, 1, 9]
 mergeSort(arr)
 console.log('result', arr)
