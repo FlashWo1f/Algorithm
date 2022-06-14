@@ -54,10 +54,27 @@ function merge(arr, left, right, mid) {
   }
 }
 
-sortTest(mergeSort)
+// sortTest(mergeSort)
 // mergeSort([3, 7, 4, 8, 1, 9])
 
 module.exports = {
   sortTest,
   getExample,
 }
+// 好像写错了
+function insertSort(arr) {
+  const len = arr.length
+  for (let i = 1; i < len; i++) {
+    let target = i
+    for (let j = i; j >=0 ; j--) {
+      if (arr[j] < arr[i]) {
+        arr[j + 1] = arr[j]
+        target--
+      }
+    }
+    arr[target] = arr[i]
+  }
+  return arr
+}
+
+sortTest(insertSort, 10)
