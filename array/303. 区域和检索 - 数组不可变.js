@@ -2,7 +2,6 @@
  * @param {number[]} nums
  */
 var NumArray = function (nums) {
-  this.nums = nums
   let pre = nums[0]
   this.preSums = nums.map((i, idx) => {
     const res = idx ? i + pre : i
