@@ -80,7 +80,7 @@ const findPartition = (arr, pivot, left, right) => {
 
 function quickSort(arr, left = 0, right = arr.length - 1) {
   if (left < right) {
-    const pivot = left
+    const pivot = right
     const index = findPartition(arr, pivot, left, right)
     quickSort(arr, left, index - 1 < left ? left : index - 1)
     quickSort(arr, index + 1 > right ? right : index + 1, right)
