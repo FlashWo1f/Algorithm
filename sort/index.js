@@ -8,6 +8,13 @@ function getExample(n) {
   return arr
 }
 
+function swap(arr, a, b) {
+  if (a === b) return
+  const temp = arr[a]
+  arr[a] = arr[b]
+  arr[b] = temp
+}
+
 /**
  * 
  * @param {function} fn 目标排序算法方法
@@ -54,8 +61,33 @@ function merge(arr, left, right, mid) {
   }
 }
 
-sortTest(mergeSort)
+// sortTest(mergeSort)
 // mergeSort([3, 7, 4, 8, 1, 9])
+
+const findPartition = (arr, pivot, left, right) => {
+  const pivotValue = arr[pivot]
+  let index = left
+  for (let i = left; i < right; i++) {
+    const value = arr[i]
+    if (value < pivotValue) {
+      swap(arr, i, index)
+      index++
+    }
+  }
+  swap(arr, pivot, index)
+  return index
+}
+
+function quickSort(arr, left = 0, right = arr.length - 1) {
+  if (left < right) {
+    const pivot = left
+    const index = findPartition(arr, pivot, left, right)
+    quickSort(arr, left, index - 1 < left ? left : index - 1)
+    quickSort(arr, index + 1 > right ? right : index + 1, right)
+  }
+}
+
+sortTest(quickSort)
 
 module.exports = {
   sortTest,
