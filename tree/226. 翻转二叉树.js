@@ -41,3 +41,13 @@ function swap(node) {
   node.left = right
   node.right = temp
 }
+
+// 2022/7/21
+var invertTree = function(root) {
+  if (root === null) return null
+
+  root.right = invertTree(root.left)
+  root.left = invertTree(root.right)
+
+  return root
+};

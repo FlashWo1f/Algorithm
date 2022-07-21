@@ -27,6 +27,7 @@ var zigzagLevelOrder = function (root) {
       } else {
         levelNode.unshift(it.val)
       }
+      // !leftToRight && leftToRight.reverse()
       if (it.left) queue.push(it.left)
       if (it.right) queue.push(it.right)
     }
