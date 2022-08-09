@@ -26,3 +26,20 @@ var isBalanced = function (root) {
 
   return getHeight(root) >= 0
 };
+
+// 下面这个稍微好理解一些
+var isBalanced = function (root) {
+  let isBalanced = true
+  function getDepth(node) {
+    if (node === null) return 0
+
+    const leftD = getDepth(node.left)
+    const rightD = getDepth(node.right)
+    if (Math.abs(leftD - rightD) > 1) {
+      isBalanced = false
+    }
+    return Math.max(leftD, rightD) + 1
+  }
+  getDepth(root)
+  return isBalanced
+};
